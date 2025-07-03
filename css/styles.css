@@ -1,0 +1,892 @@
+:root {
+    --primary-color: #000000;
+    --secondary-color: #ffffff;
+    --accent-color: #555555;
+    --text-color: #f0f0f0;
+    --bg-color: #111111;
+    --overlay-color: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.3s;
+}
+
+[data-theme="light"] {
+    --primary-color: #ffffff;
+    --secondary-color: #000000;
+    --accent-color: #aaaaaa;
+    --text-color: #333333;
+    --bg-color: #f9f9f9;
+    --overlay-color: rgba(255, 255, 255, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.background-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+    position: relative;
+    z-index: 100;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    transition: color var(--transition-speed);
+}
+
+.dot {
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-left: 2px;
+    transition: color var(--transition-speed);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color var(--transition-speed);
+    cursor: pointer;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--text-color);
+    transition: width var(--transition-speed);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    font-weight: 600;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: var(--primary-color);
+    border: 1px solid var(--accent-color);
+    padding: 15px 0;
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color var(--transition-speed);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: var(--accent-color);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: transform 0.3s, color var(--transition-speed);
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sun {
+    display: none;
+}
+
+[data-theme="light"] .moon {
+    display: none;
+}
+
+[data-theme="light"] .sun {
+    display: block;
+}
+
+.hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.3s;
+}
+
+.hero-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.6s;
+}
+
+.hero-scroll {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards 1.2s;
+}
+
+.scroll-text {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 50px;
+    background-color: var(--text-color);
+    animation: scrollLine 2s infinite;
+}
+
+.poem-section {
+    padding: 100px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.poem {
+    max-width: 600px;
+    text-align: center;
+}
+
+.poem-line {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.poem-line:nth-child(1) {
+    animation: fadeInUp 1s forwards 0.3s;
+}
+.poem-line:nth-child(2) {
+    animation: fadeInUp 1s forwards 0.6s;
+}
+.poem-line:nth-child(3) {
+    animation: fadeInUp 1s forwards 0.9s;
+}
+.poem-line:nth-child(4) {
+    animation: fadeInUp 1s forwards 1.2s;
+}
+
+.footer {
+    padding: 50px 0;
+    text-align: center;
+    border-top: 1px solid var(--accent-color);
+    margin-top: 100px;
+}
+
+.footer-text {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.footer-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scrollLine {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.5);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 20px 0;
+    }
+    
+    .nav-links {
+        margin-top: 20px;
+        gap: 15px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .poem-line {
+        font-size: 1.2rem;
+    }
+}
+
+
+
+
+
+
+
+/* Añadir esto al archivo styles.css */
+
+.about-section {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.3s;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.about-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--accent-color);
+}
+
+.dot-divider {
+    margin: 0 10px;
+}
+
+.about-content {
+    display: flex;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Estilos actualizados para la imagen */
+.about-image {
+    flex: 0 0 250px; /* Ancho fijo más pequeño */
+    margin-right: 30px;
+    align-self: flex-start; /* Alinea arriba */
+    position: sticky;
+    top: 100px; /* Se mantiene al hacer scroll */
+}
+
+.image-frame {
+    border: 1px solid var(--accent-color);
+    padding: 10px;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 300px; /* Altura reducida */
+    background-color: var(--overlay-color);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-placeholder::before {
+    content: "ISABELLA";
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.5;
+    letter-spacing: 5px;
+}
+
+.image-caption {
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+    font-style: italic;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+/* Ajustar el about-content para mejor flujo */
+.about-content {
+    display: flex;
+    gap: 0; /* Eliminamos el gap para control manual */
+    max-width: 900px; /* Un poco más compacto */
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.about-text {
+    flex: 1;
+    padding-top: 20px; /* Espacio arriba para alinear con la imagen */
+}
+
+.about-paragraph {
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.first-letter {
+    font-size: 1.5em;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+
+.highlight {
+    font-weight: 400;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--text-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.highlight:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.about-quote {
+    margin: 40px 0;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    position: relative;
+    padding: 0 20px;
+}
+
+.quote-line {
+    height: 1px;
+    background-color: var(--accent-color);
+    margin: 20px auto;
+    width: 50%;
+}
+
+.philosophy-section {
+    padding: 60px 0;
+    border-top: 1px solid var(--accent-color);
+    margin-top: 50px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.philosophy-card {
+    padding: 30px;
+    border: 1px solid var(--accent-color);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.philosophy-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.card-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+    }
+    
+    .about-title {
+        font-size: 2rem;
+    }
+    
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para la imagen de perfil */
+.about-image-container {
+    flex: 0 0 280px;
+    margin-right: 40px;
+    position: relative;
+}
+
+.image-frame {
+    width: 100%;
+    padding-bottom: 100%; /* Mantiene relación 1:1 */
+    position: relative;
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: var(--primary-color);
+    overflow: hidden;
+}
+
+.profile-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.03);
+}
+
+/* Ajustes para el layout */
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+    padding-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-image-container {
+        flex: 0 0 200px;
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+    
+    .about-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .about-text {
+        width: 100%;
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-image-container {
+        flex: 0 0 150px;
+    }
+    
+    .image-frame {
+        border-radius: 50%; /* Forma circular en móviles */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para la sección de trabajos */
+.works-section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--accent-color);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.work-cards {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.work-card {
+    border: 1px solid var(--accent-color);
+    padding: 30px;
+    margin-bottom: 40px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.work-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--accent-color);
+    padding-bottom: 15px;
+}
+
+.work-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+.work-date {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+
+.work-content {
+    line-height: 1.8;
+}
+
+.text-content {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+.text-content h3 {
+    font-family: 'Playfair Display', serif;
+    margin: 25px 0 15px;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.slideshow {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.slide {
+    border: 1px solid var(--accent-color);
+    padding: 15px;
+    background-color: var(--primary-color);
+}
+
+.slide-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.slide-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .work-header {
+        flex-direction: column;
+    }
+    
+    .work-title {
+        margin-bottom: 5px;
+    }
+    
+    .work-card {
+        padding: 20px;
+    }
+}
+
+
+
+/* Estilos para la reflexión */
+.reflection-section {
+    padding: 80px 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.reflection-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.reflection-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.reflection-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--accent-color);
+    letter-spacing: 2px;
+}
+
+.reflection-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.reflection-image {
+    flex: 0 0 250px;
+    position: sticky;
+    top: 100px;
+}
+
+.reflection-text {
+    flex: 1;
+}
+
+.reflection-paragraph {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.poetic-break {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    letter-spacing: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reflection-content {
+        flex-direction: column;
+    }
+    
+    .reflection-image {
+        flex: 0 0 200px;
+        margin: 0 auto 30px;
+        position: static;
+    }
+    
+    .reflection-title {
+        font-size: 2.2rem;
+    }
+    
+    .reflection-paragraph {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .reflection-image {
+        flex: 0 0 150px;
+    }
+    
+    .poetic-break {
+        margin: 30px 0;
+        letter-spacing: 5px;
+    }
+}
